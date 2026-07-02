@@ -5,7 +5,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CredentialCard, CredentialVerifier } from "@/components/credentials/credential-card";
 import { Skeleton } from "@/components/ui/skeleton";
 import { FileText, Shield } from "lucide-react";
-import { toast } from "@/components/ui/toast";
 
 interface Credential {
   id: string; agent_id: string; type: string; issuer: string; status: string; issued_at: string; expires_at: string | null; verified_at: string | null; agent_name?: string;

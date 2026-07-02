@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { auditService } from "@/lib/services/audit-service";
+import { withDb } from "@/lib/with-db";
 
 export async function GET(request: NextRequest) {
+  withDb();
   const { searchParams } = new URL(request.url);
 
   const agentId = searchParams.get("agent_id");
@@ -12,9 +14,15 @@ export async function GET(request: NextRequest) {
   const to = searchParams.get("to");
 
   if (agentId || outcome || action || query || from || to) {
-    return NextResponse.json(auditService.search({ agent_id: agentId || undefined, outcome: outcome || undefined, action: action || undefined, query: query || undefined, from: from || undefined, to: to || undefined }));
+    return NextResponse.json(auditService.search({
+      agent_id: agentId || undefined,
+      outcome: outcome || undefined,
+      action: action || undefined,
+      query: query || undefined,
+      from: from || undefined,
+      to: to || undefined,
+    }));
   }
 
-  // If no filters, return analytics summary
   return NextResponse.json(auditService.getAnalytics());
 }

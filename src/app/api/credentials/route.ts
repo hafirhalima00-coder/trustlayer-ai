@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { credentialService } from "@/lib/services/credential-service";
+import { withDb } from "@/lib/with-db";
 
 export async function GET(request: NextRequest) {
+  withDb();
   const { searchParams } = new URL(request.url);
   const agentId = searchParams.get("agent_id");
 
@@ -15,6 +17,7 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  withDb();
   try {
     const body = await request.json();
     const cred = credentialService.create(body);

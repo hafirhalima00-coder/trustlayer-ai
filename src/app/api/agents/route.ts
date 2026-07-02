@@ -1,10 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { agentService } from "@/lib/services/agent-service";
-import { ensureDbInitialized } from "@/lib/db/init";
-
-ensureDbInitialized();
+import { withDb } from "@/lib/with-db";
 
 export async function GET(request: NextRequest) {
+  withDb();
   const { searchParams } = new URL(request.url);
   const query = searchParams.get("q");
 
@@ -16,6 +15,7 @@ export async function GET(request: NextRequest) {
 }
 
 export async function POST(request: NextRequest) {
+  withDb();
   try {
     const body = await request.json();
     const agent = agentService.create(body);

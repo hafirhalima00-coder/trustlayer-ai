@@ -1,7 +1,9 @@
 import { NextRequest, NextResponse } from "next/server";
 import { trustDecisionEngine } from "@/lib/services/trust-decision-engine";
+import { withDb } from "@/lib/with-db";
 
 export async function POST(request: NextRequest) {
+  withDb();
   try {
     const body = await request.json();
     const { agent_id, action, resource } = body;
@@ -12,7 +14,6 @@ export async function POST(request: NextRequest) {
 
     const result = trustDecisionEngine.evaluate(agent_id, action, resource);
 
-    // Also record to audit
     const { auditService } = await import("@/lib/services/audit-service");
     auditService.record({
       agent_id,
@@ -31,6 +32,7 @@ export async function POST(request: NextRequest) {
 }
 
 export async function GET(request: NextRequest) {
+  withDb();
   const { searchParams } = new URL(request.url);
   const agentId = searchParams.get("agent_id") || undefined;
   return NextResponse.json(trustDecisionEngine.getHistory(agentId));
