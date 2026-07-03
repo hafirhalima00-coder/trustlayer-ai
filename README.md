@@ -3,7 +3,7 @@
 > **The Agent That Earns Trust** — A trust and identity platform for autonomous AI agents.
 
 <p align="center">
-  <video src="public/demo.mp4" controls width="100%" style="max-width: 720px; border-radius: 12px;"></video>
+  <video src="https://raw.githubusercontent.com/hafirhalima00-coder/trustlayer-ai/master/public/demo.mp4" controls width="100%" style="max-width: 720px; border-radius: 12px;"></video>
 </p>
 
 [![CI/CD](https://github.com/hafirhalima00-coder/trustlayer-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/hafirhalima00-coder/trustlayer-ai/actions/workflows/ci.yml)
