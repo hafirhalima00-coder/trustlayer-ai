@@ -2,7 +2,7 @@
 
 > **The Agent That Earns Trust** — A trust and identity platform for autonomous AI agents.
 
-<video src="https://github.com/hafirhalima00-coder/trustlayer-ai/raw/master/public/demo.mp4" controls width="100%" style="max-width: 720px; border-radius: 12px;"></video>
+[![Watch Demo Video](public/thumbnail.png)](public/demo.mp4)
 
 [![CI/CD](https://github.com/hafirhalima00-coder/trustlayer-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/hafirhalima00-coder/trustlayer-ai/actions/workflows/ci.yml)
 [![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?logo=vercel)](https://trustlayer.vercel.app)
