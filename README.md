@@ -2,7 +2,7 @@
 
 > **The Agent That Earns Trust** — A trust and identity platform for autonomous AI agents.
 
-[![CI/CD](https://github.com/yourorg/trustlayer/actions/workflows/ci.yml/badge.svg)](https://github.com/yourorg/trustlayer/actions/workflows/ci.yml)
+[![CI/CD](https://github.com/hafirhalima00-coder/trustlayer-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/hafirhalima00-coder/trustlayer-ai/actions/workflows/ci.yml)
 [![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?logo=vercel)](https://trustlayer.vercel.app)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://www.typescriptlang.org)
@@ -159,7 +159,7 @@ User/System → HTTP Request → Next.js API Route → Service Layer → SQLite 
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourorg/trustlayer.git
+git clone https://github.com/hafirhalima00-coder/trustlayer-ai.git
 cd trustlayer
 
 # Install dependencies
@@ -358,3 +358,8 @@ MIT License — see [LICENSE](LICENSE) for details.
 TrustLayer AI envisions a future where AI agents have verifiable identities, transparent reputations, and earned authority — just like humans in an organization. Every action is logged, every decision is explainable, and trust is built over time through demonstrated reliability.
 
 Built for the AI engineering competition.
+
+---
+
+> **built by Halima Hafir**
+
