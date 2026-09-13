@@ -8,7 +8,8 @@
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://www.typescriptlang.org)
 
 **Live Demo:** https://trustlayer-ai-theta.vercel.app  
-**Repository:** https://github.com/hafirhalima00-coder/trustlayer-ai
+**Repository:** https://github.com/hafirhalima00-coder/trustlayer-ai  
+**Video Walkthrough:** https://youtu.be/-pg-PMimW-k
 
 ---
 
