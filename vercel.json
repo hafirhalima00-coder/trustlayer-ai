@@ -1,4 +1,3 @@
 {
-  "buildCommand": "next build",
-  "installCommand": "npm install --allow-scripts"
+  "buildCommand": "next build"
 }
