@@ -1,367 +1,167 @@
 # TrustLayer AI
 
-> **The Agent That Earns Trust** — A trust and identity platform for autonomous AI agents.
-
-[![Watch Demo Video](public/thumbnail.png)](public/demo.mp4)
+> **The Agent That Earns Trust** — A trust and identity platform for autonomous AI agents with real cryptographic verification.
 
 [![CI/CD](https://github.com/hafirhalima00-coder/trustlayer-ai/actions/workflows/ci.yml/badge.svg)](https://github.com/hafirhalima00-coder/trustlayer-ai/actions/workflows/ci.yml)
-[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?logo=vercel)](https://trustlayer.vercel.app)
+[![Deployed on Vercel](https://img.shields.io/badge/Deployed%20on-Vercel-black?logo=vercel)](https://trustlayer-ai-theta.vercel.app)
 [![Next.js](https://img.shields.io/badge/Next.js-16-black?logo=next.js)](https://nextjs.org)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5-blue?logo=typescript)](https://www.typescriptlang.org)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+
+**Live Demo:** https://trustlayer-ai-theta.vercel.app  
+**Repository:** https://github.com/hafirhalima00-coder/trustlayer-ai
 
 ---
 
-## What Would an AI Agent's Reputation, Credentials, and Authority Look Like?
+## What is TrustLayer AI?
 
-TrustLayer AI answers that question. It provides a complete platform to:
+Agents will negotiate, transact, and act on behalf of people and companies. They need reputation, credentials, and scoped authority — the way humans and businesses do. TrustLayer AI builds that trust layer.
 
-- **Register** AI agents with unique identities and capabilities
-- **Define** granular permissions for every action an agent can take
-- **Track** reputation through trust scores built from real events
-- **Issue** verifiable credentials and compliance badges
-- **Evaluate** trust before executing sensitive actions — returning ALLOW, DENY, or REQUIRE_HUMAN_APPROVAL
-- **Audit** every decision with full traceability
-- **Analyze** trust distribution, risk levels, and trends across your entire agent fleet
-
----
-
-## Architecture
+### Architecture: Identity → Claims → Verification → Policy
 
 ```
-┌─────────────────────────────────────────────────────────┐
-│                     TrustLayer AI                        │
-├─────────────────────────────────────────────────────────┤
-│                     Next.js 16 (App Router)              │
-├──────────┬──────────┬──────────┬──────────┬─────────────┤
-│ Dashboard │  Agent   │Permission│Reputation│ Credentials │
-│          │ Registry │  Engine  │  System  │             │
-├──────────┴──────────┴──────────┴──────────┴─────────────┤
-│              Trust Decision Engine                        │
-├─────────────────────────────────────────────────────────┤
-│              Audit Center & Analytics                    │
-├─────────────────────────────────────────────────────────┤
-│  Services Layer (TypeScript)                             │
-├──────────┬──────────┬──────────┬──────────┬─────────────┤
-│  Agent   │Permission│Reputation│Credential│    Trust     │
-│ Service  │ Service  │ Service  │ Service  │  Decision    │
-│          │          │          │          │   Engine     │
-├──────────┴──────────┴──────────┴──────────┴─────────────┤
-│              SQLite (better-sqlite3)                     │
-│              data/trustlayer.db                          │
-└─────────────────────────────────────────────────────────┘
-```
-
-### Data Flow
-
-```
-User/System → HTTP Request → Next.js API Route → Service Layer → SQLite DB
-                                                        │
-                                                   Trust Decision
-                                                   Engine evaluates:
-                                                    • Identity (15%)
-                                                    • Permissions (25%)
-                                                    • Reputation (25%)
-                                                    • Policy (20%)
-                                                    • Risk (15%)
-                                                        │
-                                              ← Response: ALLOW/DENY/HUMAN
-                                                        │
-                                                   Audit Log
+┌──────────────────────────────────────────────────────────────────┐
+│                        TrustLayer AI                              │
+├──────────────────────────────────────────────────────────────────┤
+│                                                                  │
+│  Identity Layer          Claims Layer          Verification      │
+│  ┌──────────────┐       ┌──────────────┐      ┌──────────────┐  │
+│  │  DID Creation │──────▶│  VC Issuance │─────▶│  VC Verify   │  │
+│  │  ECDSA P-256  │       │  W3C VCs     │      │  Signature   │  │
+│  │  Key Pairs    │       │  Signed      │      │  Status Check│  │
+│  └──────────────┘       └──────────────┘      └──────┬───────┘  │
+│                                                       │          │
+│  Policy Layer          Trust Engine                   │          │
+│  ┌──────────────┐     ┌──────────────┐◀──────────────┘          │
+│  │  Configurable │────▶│  5-Factor    │                         │
+│  │  Rules        │     │  Evaluation  │                         │
+│  │  Min Score    │     │  Signed Dec  │                         │
+│  └──────────────┘     └──────────────┘                         │
+│                                                                  │
+├──────────────────────────────────────────────────────────────────┤
+│  SQLite · Web Crypto API · React Flow · Recharts · shadcn/ui    │
+└──────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## Features
+## Core Features
 
-### 1. Agent Registry
-- Register AI agents with unique UUID identities
-- Track owner, version, capabilities, and status
-- Search and filter across your agent fleet
-- View detailed agent profiles with trust scores
+### 1. DID-Based Agent Identity
+Every agent gets a Decentralized Identifier (DID) anchored to an ECDSA P-256 key pair. Identity is cryptographically verifiable — no forging, no spoofing.
 
-### 2. Permission Engine
-- Define granular action+resource permissions per agent
-- Effects: ALLOW, DENY, REQUIRE_HUMAN_APPROVAL
-- Inline editing to toggle permission effects
-- Visibility into every agent's authorized actions
+### 2. W3C Verifiable Credentials
+Credentials follow the W3C Verifiable Credentials Data Model:
+- **Signed** by issuers using ECDSA P-256
+- **Verifiable** by checking the cryptographic proof
+- **Revocable** — status checked before acceptance
+- **Expired** — expiration dates enforced
+- **Tamper-proof** — any modification invalidates the signature
 
-### 3. Reputation System
-- Trust scores (0–100) calculated from real events
-- Event types: task_success (+), task_failure (−), policy_violation (−), human_approval (+)
-- Visual reputation timeline per agent
-- Overall trust trends over time
+Credential types: GDPR Compliance, SOC 2 Type II, Human Approved, Sandbox Clearance, Data Access.
 
-### 4. Credentials
-- Issue compliance badges: GDPR, SOC 2, HIPAA, FedRAMP, ISO 27001
-- Simulated credential verification
-- Track status: verified, pending, expired, revoked
+### 3. Cross-Agent Trust Negotiation
+When Agent A requests access from Agent B:
+1. Agent A presents its DID and signed credentials
+2. Agent B verifies each credential's cryptographic signature
+3. Trust engine evaluates 5 weighted factors
+4. Decision is cryptographically signed and returned
 
-### 5. Trust Decision Engine
-- Five-factor weighted evaluation:
-  - **Identity Verification** (15%): Is the agent active?
-  - **Permission Check** (25%): Does the agent have the right permission?
-  - **Reputation Score** (25%): What is the agent's trust score?
-  - **Policy Compliance** (20%): Are there policy violations?
-  - **Risk Assessment** (15%): What is the failure rate?
-- Returns ALLOW, DENY, or REQUIRE_HUMAN_APPROVAL with explanation
-- Interactive evaluation UI
+### 4. 5-Factor Trust Evaluation
+| Factor | Weight | What It Measures |
+|---|---|---|
+| Identity Verification | 15% | Is the agent active with a valid DID? |
+| Credential Verification | 25% | Are presented VCs valid and unrevoked? |
+| Reputation Score | 25% | Historical trust score from events |
+| Policy Compliance | 20% | Are required credentials present? |
+| Risk Assessment | 15% | What is the failure rate? |
 
-### 6. Audit Center
-- Complete audit trail with timestamp, agent, action, outcome, confidence, reason
-- Search, filter by outcome, date range
-- Export to CSV
+### 5. Attack Simulator (Failure Test)
+Demonstrates how TrustLayer catches malicious agents:
 
-### 7. Analytics Dashboard
-- Trust score distribution (pie chart)
-- Risk levels (bar chart)
-- Reputation trends (area chart, 14 days)
-- Decision timeline (stacked bar, 7 days)
-- Summary cards: total agents, active agents, avg trust score, violations
+| Attack | Severity | Detection Method |
+|---|---|---|
+| Identity Spoofing | Critical | DID public key mismatch |
+| Revoked Credential | High | Credential status check |
+| Expired Credential | Medium | Expiration date check |
+| Credential Tampering | Critical | Signature verification failure |
+| Credential Replay | Critical | Subject DID mismatch |
 
-### 8. UI/UX
-- Dark mode (next-themes)
-- Collapsible sidebar navigation
-- Command palette (Ctrl+K / Cmd+K)
-- Notification center
-- Responsive design (mobile-friendly)
-- Loading skeletons and error boundaries
-- shadcn/ui components
+### 6. Audit Center & Analytics
+- Complete audit trail with signed decisions
+- CSV export
+- Trust distribution, risk levels, reputation trends, approval stats
 
 ---
 
 ## Tech Stack
 
-| Category | Technology |
+| Layer | Technology |
 |---|---|
-| Framework | Next.js 16 (App Router), React 19 |
-| Language | TypeScript 5 |
-| Styling | Tailwind CSS 4, shadcn/ui |
-| Database | SQLite via better-sqlite3 |
-| Charts | Recharts |
-| Flow | React Flow (xyflow) |
-| Icons | Lucide React |
-| Dark Mode | next-themes |
+| Framework | Next.js 16, React 19, TypeScript 5 |
+| Crypto | Web Crypto API (ECDSA P-256) |
+| Identity | DID (Decentralized Identifiers) |
+| Credentials | W3C Verifiable Credentials |
+| Database | SQLite (better-sqlite3) |
+| UI | Tailwind CSS 4, shadcn/ui, Recharts |
 | Testing | Vitest |
-| AI | Ollama integration ready |
-| Container | Docker + Docker Compose |
 | CI/CD | GitHub Actions |
-| Deployment | Vercel-ready |
+| Deploy | Vercel, Docker |
 
 ---
 
 ## Getting Started
 
-### Prerequisites
-
-- Node.js 20+
-- npm 10+
-
-### Installation
-
 ```bash
-# Clone the repository
 git clone https://github.com/hafirhalima00-coder/trustlayer-ai.git
-cd trustlayer
-
-# Install dependencies
+cd trustlayer-ai
 npm install
-
-# Start development server
 npm run dev
 ```
 
-Open [http://localhost:3000](http://localhost:3000) in your browser.
+Open http://localhost:3000
 
-The application automatically initializes a SQLite database with seed data on first request.
-
-### Build for Production
-
-```bash
-npm run build
-npm start
-```
-
-### Run Tests
-
-```bash
-npm test
-```
+### Key Pages
+- `/trust-negotiation` — Watch cross-agent trust negotiation with real crypto
+- `/attack-simulator` — Run 5 attack scenarios and see them blocked
+- `/trust-decision` — Interactive 5-factor trust evaluation
+- `/agents` — DID-based agent registry
+- `/credentials` — W3C Verifiable Credentials management
 
 ---
 
-## Docker
+## API
 
-### Using Docker Compose (recommended)
-
-```bash
-docker-compose up -d
-```
-
-### Using Docker directly
-
-```bash
-# Build
-docker build -t trustlayer .
-
-# Run
-docker run -p 3000:3000 -v $(pwd)/data:/app/data trustlayer
-```
+| Endpoint | Method | Description |
+|---|---|---|
+| `/api/trust/evaluate` | POST | Cross-agent trust negotiation |
+| `/api/trust/attack` | POST | Run attack simulation |
+| `/api/trust/negotiate` | POST | Full trust negotiation flow |
+| `/api/agents` | GET/POST | Agent registry |
+| `/api/permissions` | GET/POST | Permission rules |
+| `/api/reputation` | GET/POST | Reputation events |
+| `/api/credentials` | GET/POST | Verifiable Credentials |
+| `/api/audit` | GET | Audit logs + analytics |
 
 ---
 
-## API Reference
+## 300-Word Thesis: Agent Identity and Reputation at Scale
 
-### Agents
+**The Identity Layer Every Autonomous System Needs**
 
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/api/agents` | List all agents (supports `?q=search`) |
-| POST | `/api/agents` | Create a new agent |
-| GET | `/api/agents/[id]` | Get agent by ID |
-| PATCH | `/api/agents/[id]` | Update agent |
-| DELETE | `/api/agents/[id]` | Delete agent |
+By 2028, autonomous AI agents will outnumber human employees in most enterprises. They will negotiate contracts, transfer funds, deploy code, and make decisions on behalf of organizations. Without a trust infrastructure, this multi-agent world collapses into either paralysis (every action requires human approval) or chaos (agents act without accountability).
 
-### Permissions
+**The core problem is identity.** Today's AI agents are anonymous. A code review bot has no verifiable identity, no credentials, and no reputation. When it recommends a change, the system cannot verify who made the recommendation, what it is authorized to do, or whether it has acted reliably before. This is equivalent to letting strangers operate heavy machinery without background checks.
 
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/api/permissions` | List all permissions |
-| POST | `/api/permissions` | Create permission |
-| GET | `/api/permissions/[agentId]` | Get permissions by agent |
+**The solution is a cryptographic trust layer.** Every agent needs a Decentralized Identifier (DID) anchored to a public key. This gives agents verifiable identities that cannot be forged. On top of this identity layer, we build Verifiable Credentials — signed claims from trusted issuers certifying what an agent can do and what it has done. A deployment agent might hold a SOC 2 credential signed by the security team, a human-approval credential signed by governance, and a track record of successful deployments.
 
-### Reputation
+**Reputation is earned, not assigned.** Unlike simple score-based systems, real agent reputation is an accumulation of signed attestations. Every successful task, every policy compliance, every human approval is cryptographically signed and added to the agent's trust profile. Revocation is immediate: if an agent violates policy, its credentials are revoked and its reputation reflects the violation instantly.
 
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/api/reputation` | Overview stats (average, distribution, trends) |
-| POST | `/api/reputation` | Add reputation event |
-| GET | `/api/reputation/[agentId]` | Events and trends by agent |
+**Cross-agent trust negotiation is the missing primitive.** When Agent A asks Agent B for access, they must exchange credentials, verify signatures, and negotiate trust based on policy. This is how humans do it in business: we present identification, show credentials, and the other party decides based on trust, policy, and risk.
 
-### Credentials
-
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/api/credentials` | List all credentials |
-| POST | `/api/credentials` | Create credential |
-| POST | `/api/credentials/[id]/verify` | Verify a credential |
-
-### Trust Decision Engine
-
-| Method | Endpoint | Description |
-|---|---|---|
-| POST | `/api/trust` | Evaluate trust for an action |
-| GET | `/api/trust` | List decision history |
-
-### Audit
-
-| Method | Endpoint | Description |
-|---|---|---|
-| GET | `/api/audit` | Audit logs (supports filters: q, agent_id, outcome, action, from, to) |
-
----
-
-## Project Structure
-
-```
-src/
-├── app/                          # Next.js App Router pages and API routes
-│   ├── agents/                   # Agent Registry
-│   ├── permissions/              # Permission Engine
-│   ├── reputation/               # Reputation System
-│   ├── credentials/              # Credentials
-│   ├── trust-decision/           # Trust Decision Engine
-│   ├── audit/                    # Audit Center
-│   ├── analytics/                # Analytics Dashboard
-│   └── api/                      # REST API routes
-├── components/
-│   ├── ui/                       # shadcn/ui components
-│   ├── layout/                   # Sidebar, navbar, theme, command palette
-│   ├── agents/                   # Agent cards and lists
-│   ├── permissions/              # Permission tables
-│   ├── reputation/               # Trust score and timeline
-│   ├── credentials/              # Credential cards and verifier
-│   ├── trust/                    # Trust evaluator
-│   ├── audit/                    # Audit tables
-│   ├── analytics/                # Charts and analytics grid
-│   └── shared/                   # Search, filters, errors, skeletons
-├── lib/
-│   ├── db/                       # SQLite connection, schema, seed
-│   ├── services/                 # Business logic services
-│   ├── utils.ts                  # Utility functions
-│   └── constants.ts              # App constants
-├── hooks/                        # React hooks
-└── types/                        # TypeScript types
-```
-
----
-
-## Deployment
-
-### Vercel
-
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new)
-
-The application is fully Vercel-ready. Since it uses SQLite, you'll need a serverful deployment or configure a hosted database.
-
-For serverless deployments, consider:
-1. **Vercel + Turso** (edge-hosted SQLite)
-2. **Vercel + Neon** (serverless Postgres)
-3. **Railway / Fly.io** (full Node.js runtime)
-
-### Environment Variables
-
-Copy `.env.example` to `.env.local`:
-
-```bash
-cp .env.example .env.local
-```
-
-No additional configuration is required for SQLite-based local development.
-
----
-
-## GitHub Actions CI
-
-The CI pipeline runs linting, tests, and build on every push:
-
-```yaml
-# .github/workflows/ci.yml
-- npm run lint
-- npm test
-- npm run build
-```
-
----
-
-## Ollama Integration
-
-TrustLayer AI is designed to integrate with [Ollama](https://ollama.ai) for AI-powered trust analysis. To enable:
-
-1. Install Ollama: `curl -fsSL https://ollama.ai/install.sh | sh`
-2. Pull a model: `ollama pull llama3.2`
-3. Set the environment variable: `OLLAMA_URL=http://localhost:11434`
-
-The trust decision engine can optionally use local LLMs for:
-- Natural language explanation generation
-- Risk assessment augmentation
-- Policy conflict resolution
+**Whoever defines this standard wins the foundational layer of the autonomous economy.**
 
 ---
 
 ## License
 
-MIT License — see [LICENSE](LICENSE) for details.
-
----
-
-## The Agent That Earns Trust
-
-TrustLayer AI envisions a future where AI agents have verifiable identities, transparent reputations, and earned authority — just like humans in an organization. Every action is logged, every decision is explainable, and trust is built over time through demonstrated reliability.
-
-Built for the AI engineering competition.
-
----
-
-> **built by Halima Hafir**
-
+MIT
