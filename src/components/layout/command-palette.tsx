@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { Search, Command, FileText, Bot, Key, Award, BarChart3, Scale, Shield } from "lucide-react";
+import { Search, Command, FileText, Bot, Key, Award, BarChart3, Scale, Shield, Zap, ShieldAlert } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 import { cn } from "@/lib/utils";
 import { useRouter } from "next/navigation";
@@ -13,6 +13,8 @@ const commands = [
   { label: "Go to Reputation", href: "/reputation", icon: Award },
   { label: "Go to Credentials", href: "/credentials", icon: FileText },
   { label: "Go to Trust Engine", href: "/trust-decision", icon: Scale },
+  { label: "Trust Negotiation Demo", href: "/trust-negotiation", icon: Zap },
+  { label: "Attack Simulator", href: "/attack-simulator", icon: ShieldAlert },
   { label: "Go to Audit Center", href: "/audit", icon: FileText },
   { label: "Go to Analytics", href: "/analytics", icon: BarChart3 },
 ];

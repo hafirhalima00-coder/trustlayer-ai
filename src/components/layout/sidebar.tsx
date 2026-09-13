@@ -16,6 +16,8 @@ import {
   Settings,
   ChevronLeft,
   ChevronRight,
+  Zap,
+  ShieldAlert,
 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { useState } from "react";
@@ -27,6 +29,8 @@ const navItems = [
   { href: "/reputation", label: "Reputation", icon: Award },
   { href: "/credentials", label: "Credentials", icon: FileText },
   { href: "/trust-decision", label: "Trust Engine", icon: Scale },
+  { href: "/trust-negotiation", label: "Trust Negotiation", icon: Zap },
+  { href: "/attack-simulator", label: "Attack Simulator", icon: ShieldAlert },
   { href: "/audit", label: "Audit Center", icon: FileText },
   { href: "/analytics", label: "Analytics", icon: BarChart3 },
 ];
